@@ -149,7 +149,6 @@ server.tool(
 async function main() {
   const transport = new StdioServerTransport();
   await server.connect(transport);
-  // 標準出力をするとサーバーのレスポンスとして解釈されてしまうので、標準エラー出力に出力する
   console.error("MCP Server running on stdio");
 }
 
