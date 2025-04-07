@@ -2,6 +2,8 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { chromium, Page } from "playwright";
+import * as cheerio from "cheerio";
+import { NodeHtmlMarkdown } from "node-html-markdown";
 
 const browser = await chromium.launch();
 
@@ -91,15 +93,15 @@ server.tool(
   async ({ url }) => {
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: "networkidle" });
-
-    const article = await page.$eval(".content__default", (element) => {
-      return element?.textContent
-        ?.split("\n")
-        .map((x) => x.trim())
-        .join("\n");
+    const pageHtml = await page.evaluate(() => {
+      return globalThis.document.documentElement.outerHTML;
     });
 
-    if (!article) {
+    const $ = cheerio.load(pageHtml);
+    $("script, style, path, footer, header, head").remove();
+    const html = $.html();
+
+    if (!html) {
       return {
         isError: true,
         content: [
@@ -110,6 +112,8 @@ server.tool(
         ],
       };
     }
+
+    const article = NodeHtmlMarkdown.translate(html);
 
     return {
       content: [

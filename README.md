@@ -13,3 +13,7 @@
 - [ ] Dockerize
 - [ ] Update user agent
 - [ ] Get content of url as Markdown
+- [ ] Search only references
+- [ ] Search only news
+- [ ] Support pagination
+- [ ] Support more products?
