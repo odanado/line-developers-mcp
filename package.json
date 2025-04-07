@@ -27,5 +27,9 @@
     "format": "prettier --ignore-path .prettierignore . --write",
     "start": "node --experimental-strip-types src/app.ts",
     "watch": "node --experimental-strip-types --watch src/app.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.9.0",
+    "playwright": "^1.51.1"
   }
 }
