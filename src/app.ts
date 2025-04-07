@@ -2,8 +2,8 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
 import { chromium, Page } from "playwright";
-import * as cheerio from "cheerio";
-import { NodeHtmlMarkdown } from "node-html-markdown";
+
+import { fetchContent } from "./fetch-content.js";
 
 const browser = await chromium.launch();
 
@@ -92,34 +92,16 @@ server.tool(
   },
   async ({ url }) => {
     const page = await browser.newPage();
-    await page.goto(url, { waitUntil: "networkidle" });
-    const pageHtml = await page.evaluate(() => {
-      return globalThis.document.documentElement.outerHTML;
+    const content = await fetchContent({
+      url,
+      page,
     });
-
-    const $ = cheerio.load(pageHtml);
-    $("script, style, path, footer, header, head").remove();
-    const html = $.html();
-
-    if (!html) {
-      return {
-        isError: true,
-        content: [
-          {
-            type: "text",
-            text: "Failed to read the documentation.",
-          },
-        ],
-      };
-    }
-
-    const article = NodeHtmlMarkdown.translate(html);
 
     return {
       content: [
         {
           type: "text",
-          text: article,
+          text: content,
         },
       ],
     };
@@ -146,6 +128,26 @@ server.tool(
         type: "text",
         text: JSON.stringify(result),
       })),
+    };
+  },
+);
+
+server.resource(
+  "LIFF v2 API reference",
+  "https://developers.line.biz/en/reference/liff/",
+  async (uri) => {
+    const page = await browser.newPage();
+    const content = await fetchContent({
+      url: uri.href,
+      page,
+    });
+    return {
+      contents: [
+        {
+          uri: uri.href,
+          text: content,
+        },
+      ],
     };
   },
 );

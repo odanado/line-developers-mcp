@@ -1,5 +1,7 @@
 # line-developers-mcp
 
+Work in progress.
+
 ## TODOs
 
 - [ ] Support more locales (e.g. en)
@@ -17,3 +19,4 @@
 - [ ] Search only news
 - [ ] Support pagination
 - [ ] Support more products?
+- [ ] Add instructions
