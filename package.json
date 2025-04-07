@@ -1,0 +1,31 @@
+{
+  "name": "typescript-nodejs-template",
+  "private": true,
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "npm@11.2.0",
+  "devDependencies": {
+    "@eslint/js": "9.24.0",
+    "@tsconfig/node22": "22.0.1",
+    "@types/node": "22.14.0",
+    "eslint": "9.24.0",
+    "eslint-config-prettier": "10.1.1",
+    "npm-run-all2": "7.0.2",
+    "prettier": "3.5.3",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.29.0",
+    "vitest": "3.1.1"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "run-p test:*",
+    "test:build": "npm run build -- --noEmit",
+    "test:vitest": "vitest run",
+    "test:lint": "eslint .",
+    "test:format": "prettier --ignore-path .prettierignore . --check",
+    "format": "prettier --ignore-path .prettierignore . --write",
+    "start": "node --experimental-strip-types src/app.ts",
+    "watch": "node --experimental-strip-types --watch src/app.ts"
+  }
+}
