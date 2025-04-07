@@ -11,3 +11,5 @@
 - [ ] Improve README
 - [ ] Add examples
 - [ ] Dockerize
+- [ ] Update user agent
+- [ ] Get content of url as Markdown
