@@ -1,9 +1,9 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { chromium, Page } from "playwright";
+import { chromium, type Page } from "playwright";
 
-import { fetchContent } from "./fetch-content.js";
+import { fetchContent } from "./fetch-content.ts";
 
 const browser = await chromium.launch();
 

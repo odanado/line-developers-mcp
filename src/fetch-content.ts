@@ -1,4 +1,4 @@
-import { Page } from "playwright";
+import { type Page } from "playwright";
 import { NodeHtmlMarkdown } from "node-html-markdown";
 
 export const fetchContent = async ({
