@@ -20,9 +20,14 @@ export const registerSearchDocumentation = ({
         .describe(
           "A locale of search phrase. Only 'en' and 'ja' are supported",
         ),
-      pageNumber: z.number().describe("Page number of pagination"),
+      pageNumber: z
+        .number()
+        .default(1)
+        .optional()
+        .describe("Page number of pagination"),
     },
     async ({ searchPhrase, locale, pageNumber }) => {
+      console.error("INFO: Searching documentation...");
       const results = await searchContent({
         page,
         locale,

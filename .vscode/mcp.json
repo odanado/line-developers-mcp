@@ -1,0 +1,11 @@
+{
+  "servers": {
+    "line-developers-mcp": {
+      "command": "/Users/odan/.local/share/mise/installs/node/22.14.0/bin/node",
+      "args": [
+        "--experimental-strip-types",
+        "/Users/odan/source/github.com/odanado/line-developers-mcp/src/cli.ts"
+      ],
+    },
+  }
+}

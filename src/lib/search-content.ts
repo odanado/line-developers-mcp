@@ -10,6 +10,8 @@ const searchResultSchema = z.object({
     z.literal("document"),
     z.literal("faq"),
     z.literal("reference"),
+    z.literal("other"),
+    z.literal("glossary"),
   ]),
 });
 
@@ -28,10 +30,12 @@ export const searchContent = async ({
   searchPhrase: string;
   pageNumber?: number;
 }): Promise<SearchResult[]> => {
-  const url = new URL([locale, "search"].join("/"), BASE_URL);
+  const url = new URL([locale, "search", ""].join("/"), BASE_URL);
 
   url.searchParams.set("kw", searchPhrase);
   url.hash = `#page-${pageNumber}`;
+
+  console.error("INFO Searching:", url.toString());
 
   await page.goto(url.toString(), {
     waitUntil: "networkidle",
@@ -64,6 +68,10 @@ export const searchContent = async ({
             return "news";
           } else if (["リファレンス", "Reference"].includes(type)) {
             return "reference";
+          } else if (["その他", "Other"].includes(type)) {
+            return "other";
+          } else if (["Glossary", "用語集"].includes(type)) {
+            return "glossary";
           }
           console.error("Unknown type:", type);
           return undefined;
@@ -84,7 +92,8 @@ export const searchContent = async ({
       const parsed = searchResultSchema.safeParse(result);
 
       if (!parsed.success) {
-        console.error("Failed to parse search result:", parsed.error);
+        console.error("Failed to parse search result:", rawResults);
+        console.error("Error details:", parsed.error);
         return undefined;
       }
 
