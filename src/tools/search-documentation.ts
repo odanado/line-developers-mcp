@@ -13,13 +13,21 @@ export const registerSearchDocumentation = ({
   server.tool(
     "searchDocumentation",
     "Search documentation in the LINE Developers site",
-    { searchPhrase: z.string().describe("Search phrase") },
-    async ({ searchPhrase }) => {
+    {
+      searchPhrase: z.string().describe("Search phrase"),
+      locale: z
+        .union([z.literal("en"), z.literal("ja")])
+        .describe(
+          "A locale of search phrase. Only 'en' and 'ja' are supported",
+        ),
+      pageNumber: z.number().describe("Page number of pagination"),
+    },
+    async ({ searchPhrase, locale, pageNumber }) => {
       const results = await searchContent({
         page,
-        locale: "en",
+        locale,
         searchPhrase,
-        pageNumber: 1,
+        pageNumber,
       });
 
       return {
