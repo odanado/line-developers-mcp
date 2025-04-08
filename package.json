@@ -18,7 +18,7 @@
     "vitest": "3.1.1"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc",
     "test": "run-p test:*",
     "test:build": "npm run build -- --noEmit",
     "test:vitest": "vitest run",
