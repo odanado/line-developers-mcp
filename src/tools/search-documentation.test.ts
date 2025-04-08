@@ -71,6 +71,7 @@ describe("searchDocumentation", () => {
       name: "searchDocumentation",
       arguments: {
         searchPhrase: MOCK_SEARCH_PHRASE,
+        locale: "en",
       },
     });
 
